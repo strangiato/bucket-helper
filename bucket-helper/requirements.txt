@@ -1,0 +1,4 @@
+environ-config
+python-dotenv
+boto3
+tenacity
