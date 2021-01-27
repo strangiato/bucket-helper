@@ -1,0 +1,7 @@
+#!/bin/bash
+
+echo "Environment Variables"
+# execute the helper script to display env vars
+python config.py
+
+/usr/libexec/s2i/run
