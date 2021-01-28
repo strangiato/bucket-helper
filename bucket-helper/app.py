@@ -129,7 +129,7 @@ if __name__ == "__main__":
 
     bucket = create_bucket(s3, app_cfg.s3.bucket.name)
 
-    if app_cfg.s3.bucket.policy:
+    if app_cfg.s3.bucket.public:
         set_public_policy(s3, bucket)
 
     if app_cfg.s3.bucket.topic.name:
