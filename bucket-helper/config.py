@@ -57,7 +57,7 @@ class AppConfig:
             name="AWS_ACCESS_KEY_ID", help="The Access Key for the S3 instance"
         )
         secret_key = environ.var(
-            name="AWS_SECRET_KEY_ID", help="The Secret Key for the S3 instance"
+            name="AWS_SECRET_ACCESS_KEY", help="The Secret Key for the S3 instance"
         )
 
     s3 = environ.group(S3)
