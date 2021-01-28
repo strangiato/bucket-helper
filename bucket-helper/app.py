@@ -118,7 +118,7 @@ if __name__ == "__main__":
 
     logger.info(f"S3 endpoint URL: {app_cfg.s3.endpoint_url}")
 
-    s3 = boto3.resource(
+    s3 = boto3.client(
         "s3",
         endpoint_url=app_cfg.s3.endpoint_url,
         aws_access_key_id=app_cfg.s3.access_key,
