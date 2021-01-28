@@ -54,7 +54,7 @@ def set_public_policy(s3, bucket):
                 "Effect": "Allow",
                 "Principal": "*",
                 "Action": ["s3:GetObject"],
-                "Resource": ["arn:aws:s3:::{0}/*".format(bucket["Name"])],
+                "Resource": ["arn:aws:s3:::{0}/*".format(bucket)],
             }
         ],
     }
@@ -62,10 +62,10 @@ def set_public_policy(s3, bucket):
 
     try:
         s3.put_bucket_policy(Bucket=bucket["Name"], Policy=bucket_policy)
-        logger.info(f"Updated bucket policy to public for {bucket['Name']}")
+        logger.info(f"Updated bucket policy to public for {bucket}")
 
     except Exception:
-        logger.exception(f"Unable to set public policy to bucket {bucket['Name']}")
+        logger.exception(f"Unable to set public policy to bucket {bucket}")
         sys.exit(1)
 
     return bucket_policy
@@ -102,12 +102,12 @@ def create_topic(sns, bucket, topic, push_endpoint=None):
             NotificationConfiguration=bucket_notifications_configuration,
         )
         logger.info(
-            f"Created notification for bucket {bucket['Name']} on topic {topic}"
+            f"Created notification for bucket {bucket} on topic {topic}"
         )
 
     except Exception:
         logger.exception(
-            f"Unable to create notification for bucket {bucket['Name']} on topic {topic}"
+            f"Unable to create notification for bucket {bucket} on topic {topic}"
         )
         sys.exit(1)
 
@@ -127,10 +127,12 @@ if __name__ == "__main__":
         config=botocore.client.Config(signature_version="s3"),
     )
 
-    bucket = create_bucket(s3, app_cfg.s3.bucket.name)
+    bucket_name = app_cfg.s3.bucket.name
+
+    bucket = create_bucket(s3, bucket_name)
 
     if app_cfg.s3.bucket.public:
-        set_public_policy(s3, bucket)
+        set_public_policy(s3, bucket_name)
 
     if app_cfg.s3.bucket.topic.name:
 
@@ -145,7 +147,7 @@ if __name__ == "__main__":
 
         create_topic(
             sns,
-            bucket,
+            bucket_name,
             app_cfg.s3.bucket.topic,
             push_endpoint=app_cfg.s3.bucket.topic.push_endpoint,
         )
