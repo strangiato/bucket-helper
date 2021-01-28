@@ -61,7 +61,7 @@ def set_public_policy(s3, bucket):
     bucket_policy = json.dumps(bucket_policy)
 
     try:
-        s3.put_bucket_policy(Bucket=bucket["Name"], Policy=bucket_policy)
+        s3.put_bucket_policy(Bucket=bucket, Policy=bucket_policy)
         logger.info(f"Updated bucket policy to public for {bucket}")
 
     except Exception:
@@ -98,7 +98,7 @@ def create_topic(sns, bucket, topic, push_endpoint=None):
 
     try:
         s3.put_bucket_notification_configuration(
-            Bucket=bucket["Name"],
+            Bucket=bucket,
             NotificationConfiguration=bucket_notifications_configuration,
         )
         logger.info(
