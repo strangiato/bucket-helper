@@ -151,3 +151,5 @@ if __name__ == "__main__":
             app_cfg.s3.bucket.topic.name,
             push_endpoint=app_cfg.s3.bucket.topic.push_endpoint,
         )
+
+    logger.info("Completed bucket setup")
